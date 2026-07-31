@@ -9,6 +9,8 @@ model_path = os.path.join(os.path.dirname(__file__), "best_tourism_model.joblib"
 
 @st.cache_resource
 def load_model():
+    if not os.path.exists(model_path):
+        raise FileNotFoundError(f"Model file not found at {model_path}")
     return joblib.load(model_path)
 
 model = load_model()
