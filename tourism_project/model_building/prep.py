@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 def prepare_data():
-    df = pd.read_csv("data/Tourism.csv")
+    df = pd.read_csv("tourism_project/data/tourism.csv")
     
     # Drop unique ID column
     if "CustomerID" in df.columns:
