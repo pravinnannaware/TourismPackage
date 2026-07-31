@@ -56,7 +56,7 @@ def train_model():
         print(classification_report(ytest, preds))
 
         # Save model for Streamlit deployment
-        out_dir = "tourism_project/deployment"
+        out_dir = "tourism_project/deployment/"
         os.makedirs(out_dir, exist_ok=True)
         model_path = os.path.join(out_dir, "best_tourism_model.joblib")
         joblib.dump(best_model, model_path)
