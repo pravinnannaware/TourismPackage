@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 def register_data():
-    data_path = "data/tourism.csv"
+    data_path = "tourism_project/data/tourism.csv"
     if not os.path.exists(data_path):
         raise FileNotFoundError(f"Dataset missing at {data_path}")
 
