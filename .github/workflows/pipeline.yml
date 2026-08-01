@@ -1,15 +1,20 @@
 name: Tourism Project Pipeline
 
+# Automatically triggers on push to the main branch or manual execution from Actions tab
 on:
   push:
     branches:
       - main  # Automatically triggers on push to the main branch
   workflow_dispatch:  # lets you click "Run workflow" in the Actions tab
 
+# Grant repository write permissions to allow committing the trained model back to the repo
 permissions:
   contents: write
 
 jobs:
+  # -------------------------------------------------------------
+  # Job 1: Data Registration & Schema Validation
+  # -------------------------------------------------------------
 
   register-dataset:
     runs-on: ubuntu-latest
@@ -27,7 +32,11 @@ jobs:
         with:
           name: registered-data
           path: tourism_project/data/tourism.csv
-
+  
+  # -------------------------------------------------------------
+  # Job 2: Data Preprocessing & Train-Test Splitting
+  # -------------------------------------------------------------
+  
   data-prep:
     needs: register-dataset
     runs-on: ubuntu-latest
@@ -50,6 +59,9 @@ jobs:
             ytrain.csv
             ytest.csv
 
+  # -------------------------------------------------------------
+  # Job 3: Model Training, Tuning, & Deployment Commit
+  # -------------------------------------------------------------
   model-traning:
     needs: data-prep
     runs-on: ubuntu-latest
