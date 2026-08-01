@@ -36,7 +36,16 @@ def train_model():
     }
 
     grid = GridSearchCV(pipeline, param_grid, cv=3, scoring="f1", n_jobs=-1)
+    # Set your auth token here (replace with your actual token)
+    ngrok.set_auth_token("3H5xZmzJEEmUbSvirfMjxre110G_3dVZzySUQAKg9PWtGzEk5")
 
+    # Start MLflow UI on port 5000
+    process = subprocess.Popen(["mlflow", "ui", "--port", "5000"])
+
+    # Create public tunnel
+    public_url = ngrok.connect(5000).public_url
+    print("MLflow UI is available at:", public_url)
+    mlflow.set_tracking_uri(public_url)
     mlflow.set_experiment("Tourism_Package_Prediction")
     with mlflow.start_run():
         grid.fit(Xtrain, ytrain)
