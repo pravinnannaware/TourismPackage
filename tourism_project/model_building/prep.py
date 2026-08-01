@@ -5,6 +5,10 @@ def prepare_data():
     df = pd.read_csv("tourism_project/data/tourism.csv")
     
     # Drop unique ID column
+    if "Unnamed: 0" in df.columns:
+        df.drop(columns=["Unnamed: 0"], inplace=True)
+        
+    # Drop customer ID column
     if "CustomerID" in df.columns:
         df.drop(columns=["CustomerID"], inplace=True)
         
