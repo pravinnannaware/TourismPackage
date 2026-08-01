@@ -3,19 +3,25 @@ import joblib
 import pandas as pd
 import streamlit as st
 
+# Configure the Streamlit web application page
 st.set_page_config(page_title="Wellness Tourism Package Predictor", layout="wide")
 
+# Resolve path relative to current script directory to load trained model
 model_path = os.path.join(os.path.dirname(__file__), "best_tourism_model.joblib")
 
 @st.cache_resource
 def load_model():
+    """Load and cache the trained machine learning pipeline."""
     return joblib.load(model_path)
 
+# Load the best model artifact
 model = load_model()
 
+# Header & Subtitle
 st.title("🌴 Wellness Tourism Package Prediction")
 st.write("Predict whether a customer is likely to purchase the Wellness Tourism Package.")
 
+# --- Sidebar Inputs: Customer Profile Details ---
 st.sidebar.header("Customer Profile")
 
 age = st.sidebar.number_input("Age", 18, 100, 35)
@@ -37,6 +43,7 @@ num_children = st.sidebar.number_input("Children (<5 yrs) Visiting", 0, 5, 0)
 designation = st.sidebar.selectbox("Designation", ["Executive", "Manager", "Senior Manager", "AVP", "VP"])
 monthly_income = st.sidebar.number_input("Gross Monthly Income", 5000, 100000, 22000)
 
+# Construct Input DataFrame for Prediction
 input_df = pd.DataFrame([{
     "Age": age,
     "TypeofContact": typeof_contact,
@@ -58,9 +65,11 @@ input_df = pd.DataFrame([{
     "MonthlyIncome": monthly_income
 }])
 
+# Display Input Summary
 st.subheader("Customer Details Summary")
 st.dataframe(input_df)
 
+# Prediction Logic Trigger
 if st.button("Predict Purchase Likelihood", type="primary"):
     prediction = model.predict(input_df)[0]
     prob = model.predict_proba(input_df)[0][1]
