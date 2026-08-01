@@ -9,6 +9,8 @@ from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report, accuracy_score, f1_score
 from pyngrok import ngrok
+import subprocess
+
 
 
 def train_model():
